@@ -23,10 +23,10 @@
       "src": "/reservations(.*)",
       "dest": "server.js"
     },
-    {
+   {
       "src": "/",
-      "dest": "frontend/home.html"
-    },
+      "dest": "frontend/register.html"
+   },
     {
       "src": "/(.*\\.(html|css|js|png|jpg|ico))",
       "dest": "frontend/$1"
