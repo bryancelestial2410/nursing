@@ -22,7 +22,6 @@
       --gray-700:    #3d5047;
       --text:        #1c2b23;
 
-      /* Status colors from mockup */
       --orange-light: #fde8c8;
       --orange-dark:  #b5621e;
       --yellow-light: #fef9c3;
@@ -53,7 +52,6 @@
     .blob-1 { width: 500px; height: 500px; top: -160px; right: -160px; background: radial-gradient(circle, #b7e4c7 0%, transparent 65%); }
     .blob-2 { width: 400px; height: 400px; bottom: -120px; left: -120px; background: radial-gradient(circle, #95d5b2 0%, transparent 65%); }
 
-    /* Navbar */
     .navbar {
       position: sticky; top: 0; z-index: 100;
       background: var(--white);
@@ -75,28 +73,24 @@
     }
     .back-btn:hover { color: var(--green-dark); border-color: var(--green-light); background: var(--green-mist); }
 
-    /* Main */
     .main {
       flex: 1; padding: 48px 40px;
       position: relative; z-index: 1;
       max-width: 1200px; margin: 0 auto; width: 100%;
     }
 
-    /* Page Header */
     .page-header {
       display: flex; align-items: flex-start;
       justify-content: space-between;
       margin-bottom: 32px;
       animation: fadeUp 0.4s ease both;
     }
-
     .page-header h1 {
       font-family: 'DM Serif Display', serif;
       font-size: 34px; color: var(--text); margin-bottom: 4px;
     }
     .page-header p { font-size: 14px; color: var(--gray-500); }
 
-    /* Status Legend */
     .legend {
       background: var(--white);
       border-radius: 16px;
@@ -105,23 +99,17 @@
       box-shadow: 0 2px 12px rgba(26,71,49,0.06);
       animation: fadeUp 0.4s ease 0.05s both;
     }
-
     .legend-title {
       font-size: 11px; font-weight: 700;
       letter-spacing: 1px; text-transform: uppercase;
       color: var(--green-mid); margin-bottom: 14px;
     }
-
-    .legend-items {
-      display: flex; flex-wrap: wrap; gap: 10px;
-    }
-
+    .legend-items { display: flex; flex-wrap: wrap; gap: 10px; }
     .legend-badge {
       display: flex; align-items: center; gap: 8px;
       padding: 7px 14px; border-radius: 20px;
       font-size: 13px; font-weight: 600;
     }
-
     .legend-badge.pending    { background: var(--status-pending-bg);    color: var(--status-pending); }
     .legend-badge.approved   { background: var(--status-approved-bg);   color: var(--status-approved); }
     .legend-badge.prepared   { background: var(--status-prepared-bg);   color: var(--status-prepared); }
@@ -129,13 +117,11 @@
     .legend-badge.overdue    { background: var(--status-overdue-bg);    color: var(--status-overdue); }
     .legend-badge.cancelled  { background: var(--status-cancelled-bg);  color: var(--status-cancelled); }
 
-    /* Filters */
     .filters {
       display: flex; gap: 12px; flex-wrap: wrap;
       margin-bottom: 20px;
       animation: fadeUp 0.4s ease 0.1s both;
     }
-
     .filter-btn {
       padding: 8px 18px;
       border-radius: 20px;
@@ -147,10 +133,7 @@
       transition: all 0.2s;
     }
     .filter-btn:hover { border-color: var(--green-light); color: var(--green-dark); }
-    .filter-btn.active {
-      background: var(--green-dark); color: var(--white);
-      border-color: var(--green-dark);
-    }
+    .filter-btn.active { background: var(--green-dark); color: var(--white); border-color: var(--green-dark); }
 
     .search-box {
       margin-left: auto;
@@ -166,7 +149,6 @@
     }
     .search-box:focus { border-color: var(--green-light); box-shadow: 0 0 0 3px rgba(82,183,136,0.15); }
 
-    /* Records List */
     .records-wrap {
       display: flex; flex-direction: column; gap: 14px;
       animation: fadeUp 0.4s ease 0.15s both;
@@ -180,10 +162,7 @@
       border: 1.5px solid transparent;
       transition: border-color 0.2s, box-shadow 0.2s;
     }
-    .record-card:hover {
-      border-color: var(--green-light);
-      box-shadow: 0 6px 24px rgba(26,71,49,0.1);
-    }
+    .record-card:hover { border-color: var(--green-light); box-shadow: 0 6px 24px rgba(26,71,49,0.1); }
 
     .record-header {
       display: flex; align-items: center;
@@ -192,9 +171,7 @@
       cursor: pointer;
       gap: 16px;
     }
-
     .record-left { display: flex; align-items: center; gap: 16px; flex: 1; min-width: 0; }
-
     .record-icon {
       width: 44px; height: 44px;
       border-radius: 12px;
@@ -202,27 +179,16 @@
       display: flex; align-items: center; justify-content: center;
       font-size: 20px; flex-shrink: 0;
     }
-
     .record-info { min-width: 0; }
-
     .record-name {
       font-weight: 600; font-size: 15px;
       color: var(--text); margin-bottom: 3px;
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
-
-    .record-meta {
-      font-size: 12.5px; color: var(--gray-500);
-      display: flex; gap: 12px; flex-wrap: wrap;
-    }
-
+    .record-meta { font-size: 12.5px; color: var(--gray-500); display: flex; gap: 12px; flex-wrap: wrap; }
     .record-meta span { display: flex; align-items: center; gap: 4px; }
+    .record-right { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
 
-    .record-right {
-      display: flex; align-items: center; gap: 12px; flex-shrink: 0;
-    }
-
-    /* Status badge */
     .status-badge {
       padding: 5px 14px; border-radius: 20px;
       font-size: 12.5px; font-weight: 700;
@@ -238,7 +204,6 @@
     .chevron { font-size: 14px; color: var(--gray-300); transition: transform 0.3s; }
     .record-card.open .chevron { transform: rotate(180deg); }
 
-    /* Expanded Details */
     .record-details {
       display: none;
       padding: 0 24px 20px;
@@ -252,7 +217,6 @@
       gap: 14px;
       margin-top: 16px;
     }
-
     .detail-label {
       font-size: 11px; font-weight: 700;
       letter-spacing: 0.5px; text-transform: uppercase;
@@ -260,13 +224,7 @@
     }
     .detail-value { font-size: 13.5px; color: var(--text); font-weight: 500; }
 
-    /* Equipment list */
-    .equip-list {
-      margin-top: 14px;
-      background: var(--gray-100);
-      border-radius: 10px;
-      overflow: hidden;
-    }
+    .equip-list { margin-top: 14px; background: var(--gray-100); border-radius: 10px; overflow: hidden; }
     .equip-list-header {
       display: grid; grid-template-columns: 1fr 80px;
       padding: 9px 14px;
@@ -283,54 +241,37 @@
     }
     .equip-list-row:nth-child(even) { background: var(--white); }
 
-    /* Admin Actions */
-    .record-actions {
-      display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap;
-    }
-
+    .record-actions { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
     .action-btn {
       padding: 8px 16px; border-radius: 8px;
       font-size: 13px; font-weight: 600;
       font-family: 'DM Sans', sans-serif;
       cursor: pointer; border: none; transition: all 0.2s;
     }
-    .action-btn.approve  { background: var(--green-pale); color: var(--green-dark); }
-    .action-btn.approve:hover  { background: var(--green-light); color: var(--white); }
-    .action-btn.borrow   { background: var(--status-prepared-bg); color: var(--status-prepared); }
-    .action-btn.borrow:hover   { background: var(--blue-mid, #4a90d9); color: var(--white); }
-    .action-btn.return-btn { background: var(--status-returned-bg); color: var(--status-returned); }
+    .action-btn.approve      { background: var(--green-pale); color: var(--green-dark); }
+    .action-btn.approve:hover { background: var(--green-light); color: var(--white); }
+    .action-btn.borrow       { background: var(--status-prepared-bg); color: var(--status-prepared); }
+    .action-btn.borrow:hover  { background: #4a90d9; color: var(--white); }
+    .action-btn.return-btn   { background: var(--status-returned-bg); color: var(--status-returned); }
     .action-btn.return-btn:hover { background: var(--green-mid); color: var(--white); }
-    .action-btn.cancel   { background: #fff0f0; color: #c0392b; }
-    .action-btn.cancel:hover   { background: #e74c3c; color: var(--white); }
-    .action-btn.delete   { background: #f8f8f8; color: var(--gray-500); }
-    .action-btn.delete:hover   { background: #e74c3c; color: var(--white); }
+    .action-btn.cancel       { background: #fff0f0; color: #c0392b; }
+    .action-btn.cancel:hover  { background: #e74c3c; color: var(--white); }
+    .action-btn.delete       { background: #f8f8f8; color: var(--gray-500); }
+    .action-btn.delete:hover  { background: #e74c3c; color: var(--white); }
 
-    /* Empty state */
-    .empty-state {
-      text-align: center; padding: 60px 20px;
-      background: var(--white); border-radius: 16px;
-    }
+    .empty-state { text-align: center; padding: 60px 20px; background: var(--white); border-radius: 16px; }
     .empty-state div { font-size: 48px; margin-bottom: 12px; }
     .empty-state h3 { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--text); margin-bottom: 6px; }
     .empty-state p { font-size: 14px; color: var(--gray-500); }
 
-    /* Loading */
-    .loading {
-      text-align: center; padding: 60px;
-      color: var(--gray-500); font-size: 14px;
-    }
+    .loading { text-align: center; padding: 60px; color: var(--gray-500); font-size: 14px; }
 
-    /* Summary cards */
     .summary-row {
       display: grid; grid-template-columns: repeat(4, 1fr);
       gap: 16px; margin-bottom: 28px;
       animation: fadeUp 0.4s ease 0.08s both;
     }
-    .summary-card {
-      background: var(--white); border-radius: 14px;
-      padding: 18px 20px;
-      box-shadow: 0 2px 12px rgba(26,71,49,0.06);
-    }
+    .summary-card { background: var(--white); border-radius: 14px; padding: 18px 20px; box-shadow: 0 2px 12px rgba(26,71,49,0.06); }
     .summary-card .s-label { font-size: 12px; color: var(--gray-500); margin-bottom: 6px; }
     .summary-card .s-value { font-family: 'DM Serif Display', serif; font-size: 28px; color: var(--text); }
     .summary-card .s-sub { font-size: 12px; color: var(--gray-500); margin-top: 2px; }
@@ -354,7 +295,6 @@
   <div class="blob blob-1"></div>
   <div class="blob blob-2"></div>
 
-  <!-- Navbar -->
   <nav class="navbar">
     <a class="brand" href="home.html">
       <div class="brand-icon">🔧</div>
@@ -363,10 +303,8 @@
     <a class="back-btn" href="home.html">← Back to Menu</a>
   </nav>
 
-  <!-- Main -->
   <main class="main">
 
-    <!-- Page Header -->
     <div class="page-header">
       <div>
         <h1>Tracking Records</h1>
@@ -374,7 +312,6 @@
       </div>
     </div>
 
-    <!-- Summary Row -->
     <div class="summary-row" id="summary-row">
       <div class="summary-card">
         <div class="s-label">Total Reservations</div>
@@ -398,20 +335,18 @@
       </div>
     </div>
 
-    <!-- Status Legend -->
     <div class="legend">
       <div class="legend-title">Reservation Status Guide</div>
       <div class="legend-items">
         <div class="legend-badge pending">⏳ Pending</div>
         <div class="legend-badge approved">✅ Approved</div>
-        <div class="legend-badge borrowed">📦 Prepared / Borrowed</div>
+        <div class="legend-badge prepared">📦 Prepared / Borrowed</div>
         <div class="legend-badge returned">↩️ Returned</div>
         <div class="legend-badge overdue">⚠️ Overdue</div>
         <div class="legend-badge cancelled">✕ Cancelled</div>
       </div>
     </div>
 
-    <!-- Filters -->
     <div class="filters">
       <button class="filter-btn active" onclick="filterRecords('all', this)">All</button>
       <button class="filter-btn" onclick="filterRecords('pending', this)">Pending</button>
@@ -422,7 +357,6 @@
       <input class="search-box" type="text" placeholder="🔍 Search by name, course..." oninput="searchRecords(this.value)" />
     </div>
 
-    <!-- Records -->
     <div class="records-wrap" id="records-wrap">
       <div class="loading">Loading records...</div>
     </div>
@@ -438,6 +372,10 @@
 
   let allRecords = [];
   let currentFilter = 'all';
+
+  function authHeader() {
+    return { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' };
+  }
 
   function isOverdue(record) {
     if (record.status === 'borrowed' && record.date_return) {
@@ -457,8 +395,8 @@
   }
 
   function updateSummary(records) {
-    document.getElementById('s-total').textContent   = records.length;
-    document.getElementById('s-pending').textContent = records.filter(r => r.status === 'pending').length;
+    document.getElementById('s-total').textContent    = records.length;
+    document.getElementById('s-pending').textContent  = records.filter(r => r.status === 'pending').length;
     document.getElementById('s-borrowed').textContent = records.filter(r => r.status === 'borrowed').length;
     document.getElementById('s-overdue').textContent  = records.filter(r => isOverdue(r)).length;
   }
@@ -486,10 +424,10 @@
 
       const adminActions = user.role === 'admin' ? `
         <div class="record-actions">
-          ${status === 'pending'   ? `<button class="action-btn approve" onclick="updateStatus(${r.id},'approve',event)">✅ Approve</button>` : ''}
-          ${status === 'approved'  ? `<button class="action-btn borrow"  onclick="updateStatus(${r.id},'borrow',event)">📦 Mark Borrowed</button>` : ''}
+          ${status === 'pending'  ? `<button class="action-btn approve" onclick="updateStatus(${r.id},'approve',event)">✅ Approve</button>` : ''}
+          ${status === 'approved' ? `<button class="action-btn borrow"  onclick="updateStatus(${r.id},'borrow',event)">📦 Mark Borrowed</button>` : ''}
           ${status === 'borrowed' || status === 'overdue' ? `<button class="action-btn return-btn" onclick="updateStatus(${r.id},'return',event)">↩️ Mark Returned</button>` : ''}
-          ${status === 'pending'   ? `<button class="action-btn cancel"  onclick="updateStatus(${r.id},'cancel',event)">✕ Cancel</button>` : ''}
+          ${status === 'pending'  ? `<button class="action-btn cancel"  onclick="updateStatus(${r.id},'cancel',event)">✕ Cancel</button>` : ''}
           <button class="action-btn delete" onclick="deleteRecord(${r.id},event)">🗑 Delete</button>
         </div>` : '';
 
@@ -591,28 +529,22 @@
   }
 
   async function updateStatus(id, action, e) {
-  e.stopPropagation();
-  const labels = { approve: 'approve', borrow: 'mark as borrowed', return: 'mark as returned', cancel: 'cancel' };
-  if (!confirm(`Are you sure you want to ${labels[action]} this reservation?`)) return;
+    e.stopPropagation();
+    const labels = { approve: 'approve', borrow: 'mark as borrowed', return: 'mark as returned', cancel: 'cancel' };
+    if (!confirm(`Are you sure you want to ${labels[action]} this reservation?`)) return;
 
-  try {
-    const res = await fetch(`${API}/reservations/${id}/${action}`, {
-      method: 'PUT',
-      headers: { 'Authorization': token }
-    });
-    const data = await res.json();
-
-    // ← ADD THESE 2 LINES
-    console.log('Status:', res.status);
-    console.log('Response:', data);
-
-    if (!res.ok) { alert(data.message || 'Action failed.'); return; }
-    await loadRecords();
-  } catch (err) {
-    console.log('Error:', err); // ← ADD THIS TOO
-    alert('Cannot connect to server.');
+    try {
+      const res = await fetch(`${API}/reservations/${id}/${action}`, {
+        method: 'PUT',
+        headers: authHeader()
+      });
+      const data = await res.json();
+      if (!res.ok) { alert(data.message || 'Action failed.'); return; }
+      await loadRecords();
+    } catch (err) {
+      alert('Cannot connect to server.');
+    }
   }
-}
 
   async function deleteRecord(id, e) {
     e.stopPropagation();
@@ -620,7 +552,7 @@
     try {
       const res = await fetch(`${API}/reservations/${id}`, {
         method: 'DELETE',
-        headers: { 'Authorization': token }
+        headers: authHeader()
       });
       const data = await res.json();
       if (!res.ok) { alert(data.message || 'Delete failed.'); return; }
@@ -630,34 +562,35 @@
     }
   }
 
- async function loadRecords() {
-  const endpoint = user.role === 'admin' ? '/reservations' : '/reservations/my';
-  try {
-    const res = await fetch(`${API}${endpoint}`, {
-      headers: { 'Authorization': token }
-    });
-    const data = await res.json();
+  async function loadRecords() {
+    const endpoint = user.role === 'admin' ? '/reservations' : '/reservations/my';
+    try {
+      const res = await fetch(`${API}${endpoint}`, {
+        headers: authHeader()
+      });
 
-    
-    if (res.status === 401 || res.status === 403) {
-      alert('Your session has expired. Please log in again.');
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
-      window.location.href = 'login.html';
-      return;
-    }
+      if (res.status === 401 || res.status === 403) {
+        alert('Your session has expired. Please log in again.');
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        window.location.href = 'login.html';
+        return;
+      }
 
-    if (!res.ok) {
-      document.getElementById('records-wrap').innerHTML = `<div class="empty-state"><div>⚠️</div><h3>Error loading records</h3><p>${data.message}</p></div>`;
-      return;
+      const data = await res.json();
+
+      if (!res.ok) {
+        document.getElementById('records-wrap').innerHTML = `<div class="empty-state"><div>⚠️</div><h3>Error loading records</h3><p>${data.message}</p></div>`;
+        return;
+      }
+
+      allRecords = data;
+      updateSummary(data);
+      applyFilter();
+    } catch (err) {
+      document.getElementById('records-wrap').innerHTML = `<div class="empty-state"><div>🔌</div><h3>Cannot connect to server</h3><p>Make sure your backend is running.</p></div>`;
     }
-    allRecords = data;
-    updateSummary(data);
-    applyFilter();
-  } catch (err) {
-    document.getElementById('records-wrap').innerHTML = `<div class="empty-state"><div>🔌</div><h3>Cannot connect to server</h3><p>Make sure your backend is running.</p></div>`;
   }
-}
 
   loadRecords();
 </script>
