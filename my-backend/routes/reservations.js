@@ -140,7 +140,7 @@ router.put('/:id/approve', verifyToken, adminOnly, (req, res) => {
       return res.status(400).json({ message: `Reservation is already ${reservation.status}` });
 
     db.query(
-      'UPDATE reservations SET status = "approved" WHERE id = ?',
+      'UPDATE reservations SET status = \'approved\' WHERE id = ?',
       [req.params.id],
       (err) => {
         if (err) {
@@ -166,7 +166,7 @@ router.put('/:id/borrow', verifyToken, adminOnly, (req, res) => {
       return res.status(404).json({ message: 'Reservation not found' });
 
     db.query(
-      'UPDATE reservations SET status = "borrowed" WHERE id = ?',
+      'UPDATE reservations SET status = \'borrowed\' WHERE id = ?',
       [req.params.id],
       (err) => {
         if (err) {
@@ -195,7 +195,7 @@ router.put('/:id/return', verifyToken, adminOnly, (req, res) => {
       return res.status(400).json({ message: 'Reservation is not currently borrowed' });
 
     db.query(
-      'UPDATE reservations SET status = "returned", returned_at = NOW() WHERE id = ?',
+      'UPDATE reservations SET status = \'returned\', returned_at = NOW() WHERE id = ?',
       [req.params.id],
       (err) => {
         if (err) {
@@ -229,7 +229,7 @@ router.put('/:id/cancel', verifyToken, (req, res) => {
       return res.status(400).json({ message: 'Only pending reservations can be cancelled' });
 
     db.query(
-      'UPDATE reservations SET status = "cancelled" WHERE id = ?',
+      'UPDATE reservations SET status = \'cancelled\' WHERE id = ?',
       [req.params.id],
       (err) => {
         if (err) {
