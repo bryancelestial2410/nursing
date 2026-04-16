@@ -2,7 +2,7 @@
   "version": 2,
   "builds": [
     {
-      "src": "my-backend/server.js",
+      "src": "server.js",
       "use": "@vercel/node"
     },
     {
@@ -11,29 +11,11 @@
     }
   ],
   "routes": [
-    {
-      "src": "/auth(.*)",
-      "dest": "my-backend/server.js"
-    },
-    {
-      "src": "/tools(.*)",
-      "dest": "my-backend/server.js"
-    },
-    {
-      "src": "/reservations(.*)",
-      "dest": "my-backend/server.js"
-    },
-    {
-      "src": "/",
-      "dest": "frontend/register.html"
-    },
-    {
-      "src": "/(.*\\.(html|css|js|png|jpg|ico))",
-      "dest": "frontend/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "frontend/$1.html"
-    }
+    { "src": "/auth(.*)", "dest": "server.js" },
+    { "src": "/tools(.*)", "dest": "server.js" },
+    { "src": "/reservations(.*)", "dest": "server.js" },
+    { "src": "/", "dest": "frontend/register.html" },
+    { "src": "/(.*\\.(html|css|js|png|jpg|ico))", "dest": "frontend/$1" },
+    { "src": "/(.*)", "dest": "frontend/$1.html" }
   ]
 }
