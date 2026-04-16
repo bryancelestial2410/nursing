@@ -6,9 +6,14 @@ let sslConfig;
 
 try {
   if (process.env.DB_CA_CERT) {
-    // Vercel - uses env variable
-    sslConfig = { ca: process.env.DB_CA_CERT };
+    // Fix newlines that Vercel strips from env variables
+    const cert = process.env.DB_CA_CERT.replace(/\\n/g, '\n');
+    sslConfig = { 
+      ca: cert,
+      rejectUnauthorized: true
+    };
     console.log('✅ Using DB_CA_CERT from environment variable');
+    console.log('✅ DB_CA_CERT preview:', cert.substring(0, 80));
   } else {
     // Local - uses ca.pem file
     sslConfig = { ca: fs.readFileSync('./ca.pem') };
@@ -16,7 +21,6 @@ try {
   }
 } catch (err) {
   console.error('❌ SSL config error:', err.message);
-  // Fallback: try without SSL (only for testing)
   sslConfig = { rejectUnauthorized: false };
 }
 
@@ -36,11 +40,13 @@ const pool = mysql.createPool({
 pool.getConnection((err, connection) => {
   if (err) {
     console.error('❌ MySQL connection error:', err.message);
+    console.error('❌ Full error:', JSON.stringify(err, null, 2));
     console.error('❌ DB_HOST:', process.env.DB_HOST);
     console.error('❌ DB_USER:', process.env.DB_USER);
     console.error('❌ DB_NAME:', process.env.DB_NAME);
     console.error('❌ DB_PORT:', process.env.DB_PORT);
     console.error('❌ DB_CA_CERT exists:', !!process.env.DB_CA_CERT);
+    console.error('❌ DB_CA_CERT preview:', process.env.DB_CA_CERT?.substring(0, 100));
     return;
   }
   console.log('✅ MySQL connected successfully!');
