@@ -125,28 +125,46 @@ router.post('/', verifyToken, (req, res) => {
 
 // ── APPROVE RESERVATION (Admin only) ──────────────────────
 router.put('/:id/approve', verifyToken, adminOnly, (req, res) => {
-  console.log('APPROVE HIT - id:', req.params.id, 'user:', req.user);
+  const id = req.params.id;
+  console.log('APPROVE HIT - id:', id, 'user:', req.user);
 
-  db.query('SELECT * FROM reservations WHERE id = ?', [req.params.id], (err, results) => {
+  if (!id || isNaN(id)) {
+    return res.status(400).json({ message: 'Invalid reservation ID' });
+  }
+
+  db.query('SELECT id, status FROM reservations WHERE id = ?', [id], (err, results) => {
     if (err) {
-      console.error('APPROVE SELECT ERROR:', err.message);
-      return res.status(500).json({ error: err.message });
+      console.error('APPROVE SELECT ERROR:', err);
+      return res.status(500).json({ error: 'Database error during lookup', detail: err.message });
     }
-    if (results.length === 0)
+
+    if (results.length === 0) {
       return res.status(404).json({ message: 'Reservation not found' });
+    }
 
     const reservation = results[0];
-    if (reservation.status !== 'pending')
+    const status = reservation.status?.toLowerCase().trim();
+
+    console.log('APPROVE - current status:', status);
+
+    if (status !== 'pending') {
       return res.status(400).json({ message: `Reservation is already ${reservation.status}` });
+    }
 
     db.query(
-      'UPDATE reservations SET status = \'approved\' WHERE id = ?',
-      [req.params.id],
-      (err) => {
+      "UPDATE reservations SET status = 'approved' WHERE id = ?",
+      [id],
+      (err, result) => {
         if (err) {
-          console.error('APPROVE UPDATE ERROR:', err.message);
-          return res.status(500).json({ error: err.message });
+          console.error('APPROVE UPDATE ERROR:', err);
+          return res.status(500).json({ error: 'Database error during approval', detail: err.message });
         }
+
+        if (result.affectedRows === 0) {
+          return res.status(404).json({ message: 'Reservation not found or already updated' });
+        }
+
+        console.log('APPROVE SUCCESS - id:', id);
         res.json({ message: '✅ Reservation approved!' });
       }
     );
