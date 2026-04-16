@@ -542,7 +542,7 @@ async function updateStatus(id, action, e) {
   };
 
   try {
-    const res = await fetch(`${API}/reservations/${id}/${action}`, {
+    const res = await fetch(`${API}/reservation/${id}/${action}`, {
       method: 'PUT',
       headers: authHeader(),
       body: JSON.stringify({ status: statusMap[action] })  // ← added body
