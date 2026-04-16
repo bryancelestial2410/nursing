@@ -28,7 +28,10 @@ router.get('/', verifyToken, adminOnly, (req, res) => {
     ORDER BY r.reserved_at DESC
   `;
   db.query(query, (err, results) => {
-    if (err) return res.status(500).json({ error: err });
+    if (err) {
+      console.error('GET ALL ERROR:', err.message);
+      return res.status(500).json({ error: err.message });
+    }
 
     const data = results.map(row => ({
       ...row,
@@ -64,7 +67,10 @@ router.get('/my', verifyToken, (req, res) => {
     ORDER BY r.reserved_at DESC
   `;
   db.query(query, [req.user.id], (err, results) => {
-    if (err) return res.status(500).json({ error: err });
+    if (err) {
+      console.error('GET MY ERROR:', err.message);
+      return res.status(500).json({ error: err.message });
+    }
 
     const data = results.map(row => ({
       ...row,
@@ -95,7 +101,6 @@ router.post('/', verifyToken, (req, res) => {
 
   const user_id = req.user.id;
 
-  // Validate required fields
   if (!instructor || !section || !room || !course || !date_reservation || !date_need || !date_return) {
     return res.status(400).json({ message: 'Please fill in all required fields.' });
   }
@@ -110,7 +115,7 @@ router.post('/', verifyToken, (req, res) => {
     [user_id, instructor, section, room, course, date_reservation, date_need, date_return, lab_procedure || 'N/A', equipmentJSON, mannequinsVal],
     (err, result) => {
       if (err) {
-        console.error('INSERT ERROR:', err);
+        console.error('INSERT ERROR:', err.message);
         return res.status(500).json({ error: err.message });
       }
       res.json({ message: '✅ Reservation submitted successfully!', id: result.insertId });
@@ -120,8 +125,13 @@ router.post('/', verifyToken, (req, res) => {
 
 // ── APPROVE RESERVATION (Admin only) ──────────────────────
 router.put('/:id/approve', verifyToken, adminOnly, (req, res) => {
+  console.log('APPROVE HIT - id:', req.params.id, 'user:', req.user);
+
   db.query('SELECT * FROM reservations WHERE id = ?', [req.params.id], (err, results) => {
-    if (err) return res.status(500).json({ error: err });
+    if (err) {
+      console.error('APPROVE SELECT ERROR:', err.message);
+      return res.status(500).json({ error: err.message });
+    }
     if (results.length === 0)
       return res.status(404).json({ message: 'Reservation not found' });
 
@@ -133,7 +143,10 @@ router.put('/:id/approve', verifyToken, adminOnly, (req, res) => {
       'UPDATE reservations SET status = "approved" WHERE id = ?',
       [req.params.id],
       (err) => {
-        if (err) return res.status(500).json({ error: err });
+        if (err) {
+          console.error('APPROVE UPDATE ERROR:', err.message);
+          return res.status(500).json({ error: err.message });
+        }
         res.json({ message: '✅ Reservation approved!' });
       }
     );
@@ -142,8 +155,13 @@ router.put('/:id/approve', verifyToken, adminOnly, (req, res) => {
 
 // ── MARK AS BORROWED (Admin only) ─────────────────────────
 router.put('/:id/borrow', verifyToken, adminOnly, (req, res) => {
+  console.log('BORROW HIT - id:', req.params.id);
+
   db.query('SELECT * FROM reservations WHERE id = ?', [req.params.id], (err, results) => {
-    if (err) return res.status(500).json({ error: err });
+    if (err) {
+      console.error('BORROW SELECT ERROR:', err.message);
+      return res.status(500).json({ error: err.message });
+    }
     if (results.length === 0)
       return res.status(404).json({ message: 'Reservation not found' });
 
@@ -151,7 +169,10 @@ router.put('/:id/borrow', verifyToken, adminOnly, (req, res) => {
       'UPDATE reservations SET status = "borrowed" WHERE id = ?',
       [req.params.id],
       (err) => {
-        if (err) return res.status(500).json({ error: err });
+        if (err) {
+          console.error('BORROW UPDATE ERROR:', err.message);
+          return res.status(500).json({ error: err.message });
+        }
         res.json({ message: '✅ Marked as borrowed!' });
       }
     );
@@ -160,8 +181,13 @@ router.put('/:id/borrow', verifyToken, adminOnly, (req, res) => {
 
 // ── RETURN (Admin only) ───────────────────────────────────
 router.put('/:id/return', verifyToken, adminOnly, (req, res) => {
+  console.log('RETURN HIT - id:', req.params.id);
+
   db.query('SELECT * FROM reservations WHERE id = ?', [req.params.id], (err, results) => {
-    if (err) return res.status(500).json({ error: err });
+    if (err) {
+      console.error('RETURN SELECT ERROR:', err.message);
+      return res.status(500).json({ error: err.message });
+    }
     if (results.length === 0)
       return res.status(404).json({ message: 'Reservation not found' });
 
@@ -172,7 +198,10 @@ router.put('/:id/return', verifyToken, adminOnly, (req, res) => {
       'UPDATE reservations SET status = "returned", returned_at = NOW() WHERE id = ?',
       [req.params.id],
       (err) => {
-        if (err) return res.status(500).json({ error: err });
+        if (err) {
+          console.error('RETURN UPDATE ERROR:', err.message);
+          return res.status(500).json({ error: err.message });
+        }
         res.json({ message: '✅ Equipment returned successfully!' });
       }
     );
@@ -181,8 +210,13 @@ router.put('/:id/return', verifyToken, adminOnly, (req, res) => {
 
 // ── CANCEL RESERVATION (Owner or Admin) ───────────────────
 router.put('/:id/cancel', verifyToken, (req, res) => {
+  console.log('CANCEL HIT - id:', req.params.id);
+
   db.query('SELECT * FROM reservations WHERE id = ?', [req.params.id], (err, results) => {
-    if (err) return res.status(500).json({ error: err });
+    if (err) {
+      console.error('CANCEL SELECT ERROR:', err.message);
+      return res.status(500).json({ error: err.message });
+    }
     if (results.length === 0)
       return res.status(404).json({ message: 'Reservation not found' });
 
@@ -198,7 +232,10 @@ router.put('/:id/cancel', verifyToken, (req, res) => {
       'UPDATE reservations SET status = "cancelled" WHERE id = ?',
       [req.params.id],
       (err) => {
-        if (err) return res.status(500).json({ error: err });
+        if (err) {
+          console.error('CANCEL UPDATE ERROR:', err.message);
+          return res.status(500).json({ error: err.message });
+        }
         res.json({ message: '✅ Reservation cancelled!' });
       }
     );
@@ -207,13 +244,21 @@ router.put('/:id/cancel', verifyToken, (req, res) => {
 
 // ── DELETE RESERVATION (Admin only) ───────────────────────
 router.delete('/:id', verifyToken, adminOnly, (req, res) => {
+  console.log('DELETE HIT - id:', req.params.id);
+
   db.query('SELECT * FROM reservations WHERE id = ?', [req.params.id], (err, results) => {
-    if (err) return res.status(500).json({ error: err });
+    if (err) {
+      console.error('DELETE SELECT ERROR:', err.message);
+      return res.status(500).json({ error: err.message });
+    }
     if (results.length === 0)
       return res.status(404).json({ message: 'Reservation not found' });
 
     db.query('DELETE FROM reservations WHERE id = ?', [req.params.id], (err) => {
-      if (err) return res.status(500).json({ error: err });
+      if (err) {
+        console.error('DELETE ERROR:', err.message);
+        return res.status(500).json({ error: err.message });
+      }
       res.json({ message: '✅ Reservation deleted!' });
     });
   });

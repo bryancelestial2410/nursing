@@ -2,3 +2,4 @@
 node_modules/
 my-backend/node_modules/
 ca.pem
+.vercel
