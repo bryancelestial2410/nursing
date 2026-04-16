@@ -7,7 +7,10 @@ let sslConfig;
 try {
   if (process.env.DB_CA_CERT) {
     // Fix newlines that Vercel strips from env variables
-    const cert = process.env.DB_CA_CERT.replace(/\\n/g, '\n');
+    const cert = process.env.DB_CA_CERT
+       .replace(/\\n/g, '\n')   // handles escaped newlines
+       .replace(/\r\n/g, '\n')  // handles Windows line endings
+       .trim();                  // removes any leading/trailing whitespace
     sslConfig = { 
       ca: cert,
       rejectUnauthorized: true
