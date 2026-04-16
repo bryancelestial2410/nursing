@@ -12,9 +12,9 @@ app.get('/test', (req, res) => {
   res.json({ message: '✅ Server is working!' });
 });
 
-app.use('/auth', require('./routes/auth'));
-app.use('/tools', require('./routes/tools'));
-app.use('/reservations', require('./routes/reservations'));
+app.use('/auth', require('./my-backend/routes/auth'));
+app.use('/tools', require('./my-backend/routes/tools'));
+app.use('/reservations', require('./my-backend/routes/reservations'));
 
 // For local development
 if (process.env.NODE_ENV !== 'production') {
