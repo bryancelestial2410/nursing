@@ -1,32 +1,36 @@
-
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
-app.use(cors());
+
+// ✅ Proper CORS
+app.use(cors({
+  origin: ['http://localhost:3000', 'https://nursing-eta.vercel.app'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
+
+// ✅ Must have this to read req.body
 app.use(express.json());
 
-// TEST ROUTE ← add this!
-app.get('/test', (req, res) => {
-  res.json({ message: '✅ Server is working!' });
-});
-
-app.use('/auth', require('./my-backend/routes/auth'));
-app.use('/tools', require('./my-backend/routes/tools'));
+// ── ROUTES ─────────────────────────────────────────────────
+app.use('/auth',         require('./my-backend/routes/auth'));
+app.use('/tools',        require('./my-backend/routes/tools'));
 app.use('/reservations', require('./my-backend/routes/reservations'));
 
-// For local development
+// ── HEALTH CHECK ───────────────────────────────────────────
+app.get('/', (req, res) => {
+  res.json({ message: '✅ NCF CHS-CSR Backend is running!' });
+});
+
+// ── START SERVER (local only) ──────────────────────────────
 if (process.env.NODE_ENV !== 'production') {
-  app.listen(process.env.PORT || 3000, () => {
-    console.log(`🚀 Server running on port ${process.env.PORT || 3000}`);
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => {
+    console.log(`🚀 Server running on port ${PORT}`);
   });
 }
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-});
-
-// For Vercel
+// ✅ For Vercel
 module.exports = app;
