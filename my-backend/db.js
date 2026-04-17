@@ -2,17 +2,19 @@ const mysql = require('mysql2');
 require('dotenv').config();
 
 const db = mysql.createPool({
-  host:     process.env.DB_HOST,
-  user:     process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
   database: process.env.DB_NAME,
-  port:     parseInt(process.env.DB_PORT) || 3306,
-  ssl: { rejectUnauthorized: true },  // Aiven requires this to be true
+  port: process.env.DB_PORT || 3306,
+  ssl: {
+    rejectUnauthorized: false
+  },
   waitForConnections: true,
   connectionLimit: 10,
-  queueLimit: 0
 });
 
+// ✅ Test connection on startup
 db.getConnection((err, connection) => {
   if (err) {
     console.error('❌ Database connection failed:', err.message);
