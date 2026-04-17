@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../db');  // ✅ correct
+const db = require('../db');
 const { verifyToken, adminOnly } = require('../middleware/auth');
 
 // ── GET ALL RESERVATIONS (Admin only) ─────────────────────
@@ -132,7 +132,7 @@ router.put('/:id/approve', verifyToken, adminOnly, (req, res) => {
     return res.status(400).json({ message: 'Invalid reservation ID' });
   }
 
-  db.query('SELECT id, status FROM reservations WHERE id = ?', [id], (err, results) => {
+  db.query(`SELECT id, status FROM reservations WHERE id = ?`, [id], (err, results) => {
     if (err) {
       console.error('APPROVE SELECT ERROR:', err);
       return res.status(500).json({ error: 'Database error during lookup', detail: err.message });
@@ -152,7 +152,7 @@ router.put('/:id/approve', verifyToken, adminOnly, (req, res) => {
     }
 
     db.query(
-      "UPDATE reservations SET status = 'approved' WHERE id = ?",
+      `UPDATE reservations SET status = 'approved' WHERE id = ?`,
       [id],
       (err, result) => {
         if (err) {
@@ -175,7 +175,7 @@ router.put('/:id/approve', verifyToken, adminOnly, (req, res) => {
 router.put('/:id/borrow', verifyToken, adminOnly, (req, res) => {
   console.log('BORROW HIT - id:', req.params.id);
 
-  db.query('SELECT * FROM reservations WHERE id = ?', [req.params.id], (err, results) => {
+  db.query(`SELECT * FROM reservations WHERE id = ?`, [req.params.id], (err, results) => {
     if (err) {
       console.error('BORROW SELECT ERROR:', err.message);
       return res.status(500).json({ error: err.message });
@@ -184,7 +184,7 @@ router.put('/:id/borrow', verifyToken, adminOnly, (req, res) => {
       return res.status(404).json({ message: 'Reservation not found' });
 
     db.query(
-      'UPDATE reservations SET status = \'borrowed\' WHERE id = ?',
+      `UPDATE reservations SET status = 'borrowed' WHERE id = ?`,
       [req.params.id],
       (err) => {
         if (err) {
@@ -201,7 +201,7 @@ router.put('/:id/borrow', verifyToken, adminOnly, (req, res) => {
 router.put('/:id/return', verifyToken, adminOnly, (req, res) => {
   console.log('RETURN HIT - id:', req.params.id);
 
-  db.query('SELECT * FROM reservations WHERE id = ?', [req.params.id], (err, results) => {
+  db.query(`SELECT * FROM reservations WHERE id = ?`, [req.params.id], (err, results) => {
     if (err) {
       console.error('RETURN SELECT ERROR:', err.message);
       return res.status(500).json({ error: err.message });
@@ -213,7 +213,7 @@ router.put('/:id/return', verifyToken, adminOnly, (req, res) => {
       return res.status(400).json({ message: 'Reservation is not currently borrowed' });
 
     db.query(
-      'UPDATE reservations SET status = \'returned\', returned_at = NOW() WHERE id = ?',
+      `UPDATE reservations SET status = 'returned', returned_at = NOW() WHERE id = ?`,
       [req.params.id],
       (err) => {
         if (err) {
@@ -230,7 +230,7 @@ router.put('/:id/return', verifyToken, adminOnly, (req, res) => {
 router.put('/:id/cancel', verifyToken, (req, res) => {
   console.log('CANCEL HIT - id:', req.params.id);
 
-  db.query('SELECT * FROM reservations WHERE id = ?', [req.params.id], (err, results) => {
+  db.query(`SELECT * FROM reservations WHERE id = ?`, [req.params.id], (err, results) => {
     if (err) {
       console.error('CANCEL SELECT ERROR:', err.message);
       return res.status(500).json({ error: err.message });
@@ -247,7 +247,7 @@ router.put('/:id/cancel', verifyToken, (req, res) => {
       return res.status(400).json({ message: 'Only pending reservations can be cancelled' });
 
     db.query(
-      'UPDATE reservations SET status = \'cancelled\' WHERE id = ?',
+      `UPDATE reservations SET status = 'cancelled' WHERE id = ?`,
       [req.params.id],
       (err) => {
         if (err) {
@@ -264,7 +264,7 @@ router.put('/:id/cancel', verifyToken, (req, res) => {
 router.delete('/:id', verifyToken, adminOnly, (req, res) => {
   console.log('DELETE HIT - id:', req.params.id);
 
-  db.query('SELECT * FROM reservations WHERE id = ?', [req.params.id], (err, results) => {
+  db.query(`SELECT * FROM reservations WHERE id = ?`, [req.params.id], (err, results) => {
     if (err) {
       console.error('DELETE SELECT ERROR:', err.message);
       return res.status(500).json({ error: err.message });
@@ -272,7 +272,7 @@ router.delete('/:id', verifyToken, adminOnly, (req, res) => {
     if (results.length === 0)
       return res.status(404).json({ message: 'Reservation not found' });
 
-    db.query('DELETE FROM reservations WHERE id = ?', [req.params.id], (err) => {
+    db.query(`DELETE FROM reservations WHERE id = ?`, [req.params.id], (err) => {
       if (err) {
         console.error('DELETE ERROR:', err.message);
         return res.status(500).json({ error: err.message });
