@@ -529,33 +529,22 @@
   }
 
   async function updateStatus(id, action, e) {
-    e.stopPropagation();
-    const labels = { approve: 'approve', borrow: 'mark as borrowed', return: 'mark as returned', cancel: 'cancel' };
-    if (!confirm(`Are you sure you want to ${labels[action]} this reservation?`)) return;
+  e.stopPropagation();
+  const labels = { approve: 'approve', borrow: 'mark as borrowed', return: 'mark as returned', cancel: 'cancel' };
+  if (!confirm(`Are you sure you want to ${labels[action]} this reservation?`)) return;
 
-    const statusMap = {
-      approve: 'approved',
-      borrow:  'borrowed',
-      return:  'returned',
-      cancel:  'cancelled'
-    };
-
-    try {
-      const res = await fetch(`/reservations/${id}/approve`, {
-    method: 'PUT',
-    headers: {
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${token}` // ← this must be present
+  try {
+    const res = await fetch(`${API}/reservations/${id}/${action}`, {  // ✅ fixed
+      method: 'PUT',
+      headers: authHeader()  // ✅ uses your existing authHeader() function
+    });
+    const data = await res.json();
+    if (!res.ok) { alert(data.message || 'Action failed.'); return; }
+    await loadRecords();
+  } catch (err) {
+    alert('Cannot connect to server.');
   }
-});
-      const data = await res.json();
-      if (!res.ok) { alert(data.message || 'Action failed.'); return; }
-      await loadRecords();
-    } catch (err) {
-      alert('Cannot connect to server.');
-    }
-  }
-
+}
   async function deleteRecord(id, e) {
     e.stopPropagation();
     if (!confirm('Are you sure you want to delete this reservation? This cannot be undone.')) return;
