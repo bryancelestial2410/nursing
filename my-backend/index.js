@@ -5,12 +5,12 @@ require('dotenv').config();
 const app = express();
 
 // ── MIDDLEWARE ─────────────────────────────────────────────
+// ✅ Allow both local and production
 app.use(cors({
-  origin: '*',
+  origin: ['http://localhost:3000', 'https://nursing-eta.vercel.app'],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization'],
 }));
-app.use(express.json());
 
 // ── ROUTES ─────────────────────────────────────────────────
 app.use('/auth',         require('./routes/auth'));

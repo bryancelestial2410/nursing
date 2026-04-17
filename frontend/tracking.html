@@ -541,11 +541,13 @@
     };
 
     try {
-      const res = await fetch(`${API}/reservations/${id}/${action}`, {  // ✅ fixed: /reservations/ (plural)
-        method: 'PUT',
-        headers: authHeader(),
-        body: JSON.stringify({ status: statusMap[action] })
-      });
+      const res = await fetch(`/reservations/${id}/approve`, {
+    method: 'PUT',
+    headers: {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}` // ← this must be present
+  }
+});
       const data = await res.json();
       if (!res.ok) { alert(data.message || 'Action failed.'); return; }
       await loadRecords();
